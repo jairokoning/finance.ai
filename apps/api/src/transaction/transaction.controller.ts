@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { TransactionService } from './transaction.service'
+import { Transaction } from './transaction'
 
 @Controller('transactions')
 export class TransactionController {
@@ -8,5 +9,10 @@ export class TransactionController {
   @Get()
   listTransactions() {
     return this.transactionService.listTransactions()
+  }
+
+  @Post()
+  createTransaction(@Body() transaction: Transaction) {
+    this.transactionService.createTransaction(transaction)
   }
 }

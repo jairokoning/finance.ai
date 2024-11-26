@@ -1,5 +1,5 @@
-export type ListTransactionsDto = {
-  id: string
+export interface Transaction {
+  id?: string
   name: string
   type: TransactionType
   amount: number

@@ -3,6 +3,11 @@ import { TransactionService } from './transaction.service'
 import { PrismaService } from '../prisma/prisma.service'
 import TransactionRepository from './transaction.respository'
 import { TransactionPrismaRepository } from './transaction.prisma-repository'
+import {
+  TransactionCategory,
+  TransactionPaymentMethod,
+  TransactionType,
+} from '@prisma/client'
 
 const userId = crypto.randomUUID()
 
@@ -47,10 +52,10 @@ const transactionsArray = [
 
 const transaction = {
   name: 'Compras Online',
-  type: 'EXPENSE',
+  type: TransactionType.EXPENSE,
   amount: 189,
-  category: 'UTILITY',
-  paymentMethod: 'CREDIT_CARD',
+  category: TransactionCategory.UTILITY,
+  paymentMethod: TransactionPaymentMethod.CREDIT_CARD,
   date: new Date(),
   createdAt: new Date(),
   updatedAt: new Date(),

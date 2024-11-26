@@ -3,10 +3,18 @@ import TransactionRepository from './transaction.respository'
 import { ListTransactionsDto } from './dtos/list-transactions.dto'
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
+import { Transaction } from './transaction'
 
 @Injectable()
 export class TransactionPrismaRepository implements TransactionRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  async createTransaction(transaction: Transaction): Promise<void> {
+    await this.prisma.transaction.create({
+      data: transaction,
+    })
+  }
+
   async getTransactions(): Promise<ListTransactionsDto[]> {
     const transactionsData = await this.prisma.transaction.findMany()
     const transactions = transactionsData.map(transaction => {
