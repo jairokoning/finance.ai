@@ -1,8 +1,23 @@
 'use server'
-import type { Transaction } from '@/app/_dtos/transactions'
+import type {
+  TransactionCategory,
+  TransactionPaymentMethod,
+  TransactionType,
+} from '@/app/_dtos/transactions'
 import { auth } from '@clerk/nextjs/server'
+import { revalidatePath } from 'next/cache'
 
-export const addTransaction = async (params: Transaction) => {
+interface UpsertTransactionParams {
+  id?: string
+  name: string
+  amount: number
+  type: TransactionType
+  category: TransactionCategory
+  paymentMethod: TransactionPaymentMethod
+  date: Date
+}
+
+export const addTransaction = async (params: UpsertTransactionParams) => {
   const { userId } = auth()
   if (!userId) throw new Error('Unauthorized')
   await fetch(
@@ -17,4 +32,5 @@ export const addTransaction = async (params: Transaction) => {
       body: JSON.stringify({ ...params, userId }),
     }
   )
+  revalidatePath('/transactions')
 }

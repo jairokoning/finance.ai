@@ -96,21 +96,7 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await addTransaction({ ...data, id: transactionId })
-      // await fetch(
-      //   // `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
-      //   'http://localhost:3333/transactions',
-      //   {
-      //     method: 'post',
-      //     headers: {
-      //       Authorization: 'Bearer',
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({ ...data, id: transactionId, userId }),
-      //   }
-      // )
-
-      // upsertTransaction({ ...data, id: transactionId })
+      await addTransaction(data)
       setIsOpen(false)
       form.reset()
     } catch (error) {
