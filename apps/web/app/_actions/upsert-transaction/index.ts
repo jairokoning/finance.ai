@@ -17,14 +17,14 @@ interface UpsertTransactionParams {
   date: Date
 }
 
-export const addTransaction = async (params: UpsertTransactionParams) => {
+export const upsertTransaction = async (params: UpsertTransactionParams) => {
   const { userId } = auth()
   if (!userId) throw new Error('Unauthorized')
   await fetch(
     // `${process.env.NEXT_PUBLIC_API_URL}/transactions`,
     'http://localhost:3333/transactions',
     {
-      method: 'post',
+      method: params.id ? 'put' : 'post',
       headers: {
         Authorization: 'Bearer',
         'Content-Type': 'application/json',
@@ -32,5 +32,6 @@ export const addTransaction = async (params: UpsertTransactionParams) => {
       body: JSON.stringify({ ...params, userId }),
     }
   )
+
   revalidatePath('/transactions')
 }

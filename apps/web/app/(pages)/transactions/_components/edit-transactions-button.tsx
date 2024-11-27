@@ -2,9 +2,9 @@
 
 import { Button } from '@/app/_components/ui/button'
 import UpsertTransactionDialog from '@/app/_components/upsert-transaction-dialog'
+import type { Transaction } from '@/app/_dtos/transactions'
 import { PencilIcon } from 'lucide-react'
 import { useState } from 'react'
-import type { Transaction } from '../_columns'
 
 interface EditTransactionButtonProps {
   transaction: Transaction

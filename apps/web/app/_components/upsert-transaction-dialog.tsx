@@ -40,7 +40,7 @@ import {
   TransactionPaymentMethod,
   TransactionType,
 } from '../_dtos/transactions'
-import { addTransaction } from '../_services/add-transaction'
+import { upsertTransaction } from '../_actions/upsert-transaction'
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean
@@ -96,7 +96,7 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await addTransaction(data)
+      await upsertTransaction({ ...data, id: transactionId })
       setIsOpen(false)
       form.reset()
     } catch (error) {
