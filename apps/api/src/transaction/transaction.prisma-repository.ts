@@ -2,12 +2,19 @@ import { PrismaService } from '../prisma/prisma.service'
 import TransactionRepository from './transaction.respository'
 import { ListTransactionsDto } from './dtos/list-transactions.dto'
 import { Injectable } from '@nestjs/common'
-import { Prisma } from '@prisma/client'
 import { Transaction } from './transaction'
 
 @Injectable()
 export class TransactionPrismaRepository implements TransactionRepository {
   constructor(private readonly prisma: PrismaService) {}
+  async updateTransaction(transaction: Transaction, id: string): Promise<void> {
+    await this.prisma.transaction.update({
+      where: {
+        id,
+      },
+      data: transaction,
+    })
+  }
 
   async createTransaction(transaction: Transaction): Promise<void> {
     await this.prisma.transaction.create({

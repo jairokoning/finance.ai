@@ -15,4 +15,8 @@ export class TransactionService {
     const id = crypto.randomUUID()
     await this.transactionRepository.createTransaction({ ...transaction, id })
   }
+
+  async updateTransaction(transaction: Transaction, id: string) {
+    await this.transactionRepository.updateTransaction(transaction, id)
+  }
 }
