@@ -6,9 +6,9 @@ import { Transaction } from './transaction'
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Get()
-  listTransactions() {
-    return this.transactionService.listTransactions()
+  @Get(':userId')
+  listTransactions(@Param('userId') userId: string) {
+    return this.transactionService.listTransactions(userId)
   }
 
   @Post()

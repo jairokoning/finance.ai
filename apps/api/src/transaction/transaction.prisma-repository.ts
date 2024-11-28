@@ -22,8 +22,12 @@ export class TransactionPrismaRepository implements TransactionRepository {
     })
   }
 
-  async getTransactions(): Promise<ListTransactionsDto[]> {
-    const transactionsData = await this.prisma.transaction.findMany()
+  async getTransactions(userId: string): Promise<ListTransactionsDto[]> {
+    const transactionsData = await this.prisma.transaction.findMany({
+      where: {
+        userId,
+      },
+    })
     const transactions = transactionsData.map(transaction => {
       return {
         id: transaction.id,

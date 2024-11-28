@@ -6,8 +6,8 @@ import { Transaction } from './transaction'
 export class TransactionService {
   constructor(private transactionRepository: TransactionRepository) {}
 
-  async listTransactions() {
-    const output = await this.transactionRepository.getTransactions()
+  async listTransactions(userId: string) {
+    const output = await this.transactionRepository.getTransactions(userId)
     return output
   }
 
