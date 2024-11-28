@@ -9,10 +9,10 @@ export class TransactionPrismaRepository implements TransactionRepository {
   constructor(private readonly prisma: PrismaService) {}
   async updateTransaction(transaction: Transaction, id: string): Promise<void> {
     await this.prisma.transaction.update({
+      data: transaction,
       where: {
         id,
       },
-      data: transaction,
     })
   }
 
