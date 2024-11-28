@@ -13,7 +13,7 @@ const TransactionsPage = async () => {
 
   const response = await fetch(
     //`${process.env.NEXT_PUBLIC_API_URL}/transactions`,
-    'http://localhost:3333/transactions',
+    `http://localhost:3333/transactions/${userId}`,
     {
       method: 'GET',
       headers: {
