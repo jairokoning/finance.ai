@@ -82,6 +82,7 @@ const UpsertTransactionDialog = ({
   transactionId,
   setIsOpen,
 }: UpsertTransactionDialogProps) => {
+  if (defaultValues) defaultValues.date = new Date(defaultValues.date)
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
@@ -96,7 +97,7 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await upsertTransaction({ ...data, id: transactionId })
+      await upsertTransaction(data, transactionId)
       setIsOpen(false)
       form.reset()
     } catch (error) {
