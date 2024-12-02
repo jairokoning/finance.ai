@@ -19,4 +19,8 @@ export class TransactionService {
   async updateTransaction(transaction: Transaction, id: string) {
     await this.transactionRepository.updateTransaction(transaction, id)
   }
+
+  async getSummary(userId: string, month: string) {
+    return this.transactionRepository.getSummary(userId, month)
+  }
 }
