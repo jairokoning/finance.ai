@@ -3,6 +3,7 @@ import TransactionRepository from './transaction.respository'
 import { ListTransactionsDto } from './dtos/list-transactions.dto'
 import { Injectable } from '@nestjs/common'
 import { Transaction } from './transaction'
+import { TransactionType } from '@prisma/client'
 
 @Injectable()
 export class TransactionPrismaRepository implements TransactionRepository {
@@ -48,6 +49,17 @@ export class TransactionPrismaRepository implements TransactionRepository {
         })
       )._sum.amount
     )
+    const typesPercentage = {
+      [TransactionType.DEPOSIT]: Math.round(
+        (Number(depositsTotal || 0) / Number(transactionsTotal)) * 100
+      ),
+      [TransactionType.EXPENSE]: Math.round(
+        (Number(expensesTotal || 0) / Number(transactionsTotal)) * 100
+      ),
+      [TransactionType.INVESTMENT]: Math.round(
+        (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100
+      ),
+    }
 
     return {
       balance,
@@ -55,6 +67,7 @@ export class TransactionPrismaRepository implements TransactionRepository {
       investmentsTotal,
       expensesTotal,
       transactionsTotal,
+      typesPercentage,
     }
   }
   async updateTransaction(transaction: Transaction, id: string): Promise<void> {
