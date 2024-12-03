@@ -60,6 +60,24 @@ export class TransactionPrismaRepository implements TransactionRepository {
         (Number(investmentsTotal || 0) / Number(transactionsTotal)) * 100
       ),
     }
+    const totalExpensePerCategory = (
+      await this.prisma.transaction.groupBy({
+        by: ['category'],
+        where: {
+          ...where,
+          type: TransactionType.EXPENSE,
+        },
+        _sum: {
+          amount: true,
+        },
+      })
+    ).map(category => ({
+      category: category.category,
+      totalAmount: Number(category._sum.amount),
+      percentageOfTotal: Math.round(
+        (Number(category._sum.amount) / Number(expensesTotal)) * 100
+      ),
+    }))
 
     return {
       balance,
@@ -68,6 +86,7 @@ export class TransactionPrismaRepository implements TransactionRepository {
       expensesTotal,
       transactionsTotal,
       typesPercentage,
+      totalExpensePerCategory,
     }
   }
   async updateTransaction(transaction: Transaction, id: string): Promise<void> {
