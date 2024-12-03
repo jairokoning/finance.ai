@@ -78,6 +78,11 @@ export class TransactionPrismaRepository implements TransactionRepository {
         (Number(category._sum.amount) / Number(expensesTotal)) * 100
       ),
     }))
+    const lastTransactions = await this.prisma.transaction.findMany({
+      where,
+      orderBy: { date: 'desc' },
+      take: 15,
+    })
 
     return {
       balance,
@@ -87,6 +92,7 @@ export class TransactionPrismaRepository implements TransactionRepository {
       transactionsTotal,
       typesPercentage,
       totalExpensePerCategory,
+      lastTransactions,
     }
   }
   async updateTransaction(transaction: Transaction, id: string): Promise<void> {
