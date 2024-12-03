@@ -5,6 +5,7 @@ import SummaryCards from './_components/summary-cards'
 import TimeSelect from './_components/time-select'
 import { getDashboard } from '@/app/_actions/get-dashboad'
 import { isMatch } from 'date-fns'
+import TransactionsPieChart from './_components/transactions-pie-chart'
 
 interface HomeProps {
   searchParams: {
@@ -29,7 +30,14 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
         </div>
-        <SummaryCards month={month} {...dashboard} />
+        <div className="grid h-full grid-cols-[2fr,1fr] gap-6 overflow-hidden">
+          <div className="flex flex-col gap-6 overflow-hidden">
+            <SummaryCards month={month} {...dashboard} />
+            <div className="grid h-full grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
+              <TransactionsPieChart {...dashboard} />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
