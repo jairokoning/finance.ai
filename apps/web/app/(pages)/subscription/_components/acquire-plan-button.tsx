@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from '@/app/_components/ui/button'
-import { createStripeCheckout } from '../_actions/create-stripe-checkout'
 import { loadStripe } from '@stripe/stripe-js'
 import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
