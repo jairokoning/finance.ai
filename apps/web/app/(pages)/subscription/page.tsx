@@ -5,15 +5,15 @@ import { Card, CardContent, CardHeader } from '../../_components/ui/card'
 import { CheckIcon, XIcon } from 'lucide-react'
 import AcquirePlanButton from './_components/acquire-plan-button'
 import { Badge } from '../../_components/ui/badge'
-// import { getCurrentMonthTransactions } from '../../_data/get-current-month-transactions'
+import { getCurrentMonthTransactions } from '../../_data/get-current-month-transactions'
 
 const SubscriptionPage = async () => {
-  const { userId } = await auth()
+  const { userId } = auth()
   if (!userId) {
     redirect('/login')
   }
   const user = await clerkClient().users.getUser(userId)
-  const currentMonthTransactions = 7 // await getCurrentMonthTransactions()
+  const currentMonthTransactions = await getCurrentMonthTransactions()
   const hasPremiumPlan = user.publicMetadata.subscriptionPlan === 'premium'
   return (
     <>
