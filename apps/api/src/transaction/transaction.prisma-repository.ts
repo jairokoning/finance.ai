@@ -8,6 +8,23 @@ import { TransactionType } from '@prisma/client'
 @Injectable()
 export class TransactionPrismaRepository implements TransactionRepository {
   constructor(private readonly prisma: PrismaService) {}
+  async getCountTransactionsOfMonth(
+    userId: string,
+    startOfMonth: Date,
+    endOfMonth: Date
+  ): Promise<number> {
+    console.log(startOfMonth, endOfMonth, new Date())
+    const count = await this.prisma.transaction.count({
+      where: {
+        userId,
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
+      },
+    })
+    return count
+  }
   async getSummary(userId: string, month: string): Promise<any> {
     const where = {
       userId,

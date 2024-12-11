@@ -23,4 +23,16 @@ export class TransactionService {
   async getSummary(userId: string, month: string) {
     return this.transactionRepository.getSummary(userId, month)
   }
+
+  async getCountOfMonthTransactions(
+    userId: string,
+    startOfMonth: Date,
+    endOfMonth: Date
+  ) {
+    return this.transactionRepository.getCountTransactionsOfMonth(
+      userId,
+      startOfMonth,
+      endOfMonth
+    )
+  }
 }

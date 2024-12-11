@@ -6,11 +6,6 @@ import { Transaction } from './transaction'
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Get(':userId')
-  listTransactions(@Param('userId') userId: string) {
-    return this.transactionService.listTransactions(userId)
-  }
-
   @Post()
   createTransaction(@Body() transaction: Transaction) {
     this.transactionService.createTransaction(transaction)
@@ -24,5 +19,23 @@ export class TransactionController {
   @Get('/summary/:userId')
   getSummary(@Param('userId') userId: string, @Query('month') month: string) {
     return this.transactionService.getSummary(userId, month)
+  }
+
+  @Get('current-month')
+  getCountOfMonthTransactions(
+    @Query('userId') userId: string,
+    @Query('startOfMonth') startOfMonth: Date,
+    @Query('endOfMonth') endOfMonth: Date
+  ) {
+    return this.transactionService.getCountOfMonthTransactions(
+      userId,
+      new Date(startOfMonth),
+      new Date(endOfMonth)
+    )
+  }
+
+  @Get(':userId')
+  listTransactions(@Param('userId') userId: string) {
+    return this.transactionService.listTransactions(userId)
   }
 }

@@ -6,4 +6,9 @@ export default interface TransactionRepository {
   createTransaction(transaction: Transaction): Promise<void>
   updateTransaction(transaction: Transaction, id: string): Promise<void>
   getSummary(userId: string, month: string): Promise<any>
+  getCountTransactionsOfMonth(
+    userId: string,
+    startOfMonth: Date,
+    endOfMonth: Date
+  ): Promise<number>
 }
